@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="theme-color" content="#151b35"><title>Christmas Quests — Bon & Cún Bizzare Adventure</title>
+<style>
+:root{--ink:#28251f;--cream:#fff8e9;--line:#39342b;--gold:#f2cf67}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:#151b35;color:var(--ink);font-family:Georgia,'Times New Roman',serif;overflow:hidden}
+body{display:grid;place-items:center;background:radial-gradient(ellipse at center,#34466f 0%,#151b35 75%);min-height:100dvh;min-height:100svh}
+#game{position:relative;width:min(100vw,217dvh);height:auto;aspect-ratio:852/393;max-height:100dvh;overflow:hidden;background:#f4e4ce;box-shadow:0 16px 55px #0008;border-radius:0;user-select:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+#rotateNotice{display:none;position:fixed;inset:0;z-index:20;align-items:center;justify-content:center;flex-direction:column;gap:14px;padding:28px;text-align:center;color:#fff8e9;background:#151b35;font-family:Georgia,serif}
+.rotateIcon{font-size:48px;animation:turn 1.8s ease-in-out infinite alternate}
+@keyframes turn{to{transform:rotate(90deg)}}
+.screen{position:absolute;inset:0;display:none}.screen.active{display:block}.full{width:100%;height:100%;object-fit:fill;display:block}
+#titleScreen,#introScreen{cursor:pointer}.startCue{position:absolute;left:0;right:0;bottom:5%;text-align:center;color:#fff;font-size:clamp(11px,2.1vw,20px);text-shadow:0 1px 5px #17244e;animation:pulse 1.5s infinite;pointer-events:none}
+@keyframes pulse{50%{opacity:.45}}
+#playScreen{background:#e9d5bc}.scene{position:absolute;inset:0;width:100%;height:100%;object-fit:fill}
+.topbar{position:absolute;left:1.8%;right:1.8%;top:2.4%;display:flex;align-items:flex-start;justify-content:space-between;pointer-events:none}
+.topLeft,.topRight{display:flex;align-items:center;gap:clamp(4px,1vw,10px);pointer-events:auto}
+.iconBtn{border:0;background:transparent;padding:0;width:clamp(25px,5.4vw,48px);height:clamp(25px,5.4vw,48px);cursor:pointer;filter:drop-shadow(0 2px 2px #0002)}.iconBtn img{width:100%;height:100%;object-fit:contain}
+.levelTag{width:clamp(90px,19vw,170px);height:auto;position:relative}.levelTag img{width:100%;display:block}.levelTag span{position:absolute;inset:0;display:grid;place-items:center;font-size:clamp(10px,1.8vw,17px);font-weight:bold;color:#2b271e}
+.characterSwitch{display:flex;gap:4px;background:#fff8e9dd;border:1.5px solid #373127;border-radius:9px;padding:3px;box-shadow:0 2px 5px #0002}
+.charBtn{border:1px solid transparent;border-radius:6px;background:transparent;padding:4px 9px;font: bold clamp(10px,1.6vw,14px) Georgia;color:#514b3f;cursor:pointer}
+.charBtn.selected{background:#f3d98d;border-color:#4a4131;color:#28251f}
+.dialogue{position:absolute;left:18%;right:18%;bottom:3%;min-height:16%;padding:clamp(7px,1.5vw,13px) clamp(12px,2vw,20px);border:2px solid #3c352b;border-radius:13px;background:#fff8e9f2;box-shadow:0 3px 0 #3c352b;display:flex;align-items:center;gap:12px;cursor:pointer}
+.speaker{font-weight:bold;white-space:nowrap;font-size:clamp(11px,1.8vw,16px);color:#8b5c37}.line{font-size:clamp(11px,1.8vw,16px);line-height:1.25;flex:1}.continue{font-size:clamp(9px,1.3vw,12px);opacity:.55;white-space:nowrap}
+.hotspot{position:absolute;border:0;background:transparent;cursor:pointer;border-radius:12px;outline:none}.hotspot:focus-visible{outline:2px dashed #fff;outline-offset:2px}
+#ladderHotspot{left:8%;top:25%;width:17%;height:48%}#starHotspot{left:74%;top:27%;width:10%;height:20%}#treeHotspot{left:23%;top:19%;width:25%;height:55%}#plushHotspot{left:72%;top:52%;width:12%;height:23%}#sofaHotspot{left:44%;top:48%;width:23%;height:25%}
+#hintBubble{position:absolute;top:15%;left:35%;max-width:32%;padding:8px 12px;border:1.5px solid #3c352b;border-radius:10px;background:#fff8e9;color:#332d24;font-size:clamp(10px,1.6vw,14px);box-shadow:0 2px 5px #0002;display:none}
+#completeOverlay{position:absolute;inset:0;background:#17213a88;display:none;align-items:center;justify-content:center}.completeCard{background:#fff8e9;border:2px solid #39342b;border-radius:15px;padding:18px 26px;text-align:center;box-shadow:0 5px 0 #39342b;max-width:70%}.completeCard h2{font-size:clamp(17px,3vw,27px);margin:0 0 7px}.completeCard p{font-size:clamp(11px,1.8vw,16px);margin:0 0 14px}.action{background:#263c78;color:white;border:1.5px solid #1c2c5c;border-radius:7px;padding:8px 18px;font: bold clamp(11px,1.6vw,15px) Georgia;cursor:pointer}
+#introScreen .introCue{position:absolute;bottom:7%;left:0;right:0;text-align:center;color:#fff;font-size:clamp(11px,2vw,18px);text-shadow:0 1px 5px #333;animation:pulse 1.5s infinite}
+@media (orientation:portrait) and (max-width:900px){
+ body{display:block;background:#151b35}
+ #game{display:none}
+ #rotateNotice{display:flex}
+}
+@media (orientation:landscape) and (max-height:500px){
+ body{display:grid;place-items:center}
+ #game{width:min(100vw,217dvh);max-height:100dvh;border-radius:0}
+ .topbar{top:2%;left:1.5%;right:1.5%}
+ .iconBtn{width:clamp(30px,7.2vh,42px);height:clamp(30px,7.2vh,42px)}
+ .levelTag{width:clamp(100px,22vh,145px)}
+ .charBtn{font-size:clamp(12px,2.8vh,15px);padding:5px 10px;min-height:32px;min-width:48px}
+ .dialogue{left:14%;right:14%;bottom:2%;min-height:19%;padding:7px 12px;gap:9px}
+ .speaker,.line{font-size:clamp(12px,3vh,16px)}
+ .continue{font-size:clamp(9px,2.2vh,12px)}
+ .hotspot{touch-action:manipulation}
+ .action{min-height:40px;padding:9px 20px}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
+</style></head><body>
+<main id="game" aria-label="Christmas Quests game">
+ <section id="titleScreen" class="screen active"><img class="full" src="assets/title.png" alt="Christmas Quests — Bon & Cún Bizzare Adventure"><div class="startCue">Tap anywhere to start</div></section>
+ <section id="introScreen" class="screen"><img class="full" src="assets/level1_intro.png" alt="Level 1 — Christmas Tree"><div class="introCue">Tap to begin</div></section>
+ <section id="playScreen" class="screen">
+  <img id="scene" class="scene" src="assets/scene_default.png" alt="Christmas living room">
+  <div class="topbar"><div class="topLeft"><button class="iconBtn" id="backBtn" title="Back to level intro"><img src="assets/ui_back.png" alt="Back"></button><div class="levelTag"><img src="assets/ui_level_tag.png" alt=""><span>Level 01 / 06</span></div></div>
+   <div class="topRight"><div class="characterSwitch"><button class="charBtn selected" id="bonBtn">BON</button><button class="charBtn" id="cunBtn">CÚN</button></div><button class="iconBtn" id="hintBtn" title="Hint"><img src="assets/ui_hints.png" alt="Hint"></button><button class="iconBtn" id="musicBtn" title="Music"><img src="assets/ui_music.png" alt="Music"></button></div></div>
+  <button class="hotspot" id="ladderHotspot" aria-label="Inspect ladder"></button><button class="hotspot" id="starHotspot" aria-label="Inspect star"></button><button class="hotspot" id="treeHotspot" aria-label="Inspect Christmas tree"></button><button class="hotspot" id="plushHotspot" aria-label="Inspect plush toy"></button><button class="hotspot" id="sofaHotspot" aria-label="Inspect sofa"></button>
+  <div id="hintBubble"></div>
+  <div class="dialogue" id="dialogue" role="button" tabindex="0"><span class="speaker" id="speaker">BON</span><span class="line" id="line">The star is still on the shelf. We should put it on the tree.</span><span class="continue">TAP TO CONTINUE ▸</span></div>
+  <div id="completeOverlay"><div class="completeCard"><h2>One problem down!</h2><p>Five more to go. Merry Christmas, you two.</p><button class="action" id="continueBtn">Continue</button></div></div>
+ </section>
+</main>
+<div id="rotateNotice" aria-live="polite"><div class="rotateIcon">📱</div><strong>Rotate your phone</strong><span>Christmas Quests is best played sideways.<br>Turn your phone to landscape to continue.</span></div>
+<script>
+const $=id=>document.getElementById(id);let screen='title',sceneState='default',active='BON',step=0,plushSeen=false,musicOn=false;
+const scenes={default:'assets/scene_default.png',bon:'assets/scene_bon_ladder.png',cun:'assets/scene_cun_star.png',complete:'assets/scene_complete.png',laugh:'assets/scene_laugh.png'};
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active')}
+function setDialogue(who,msg){$('speaker').textContent=who;$('line').textContent=msg}
+function setActive(who){active=who;$('bonBtn').classList.toggle('selected',who==='BON');$('cunBtn').classList.toggle('selected',who==='CÚN')}
+function setScene(s){sceneState=s;$('scene').src=scenes[s];$('hintBubble').style.display='none'}
+$('titleScreen').addEventListener('click',()=>{show('introScreen');screen='intro'});
+$('introScreen').addEventListener('click',()=>{show('playScreen');screen='play';setScene('default');setActive('BON');setDialogue('BON','The star is still on the shelf. We should put it on the tree.')});
+$('bonBtn').onclick=()=>{setActive('BON');setDialogue('BON',sceneState==='default'?'I can hold the ladder. You climb up and get the star.':'I’ve got it. The ladder isn’t going anywhere.')};
+$('cunBtn').onclick=()=>{setActive('CÚN');setDialogue('CÚN',sceneState==='default'?'Can you hold the ladder steady while I get the star?':'Okay, my turn. Keep that ladder steady!')};
+$('ladderHotspot').onclick=()=>{
+ if(sceneState==='default'){
+  if(active!=='BON'){setDialogue('CÚN','I can climb, but someone needs to hold the ladder first.');return}
+  setScene('bon');step=1;setDialogue('BON','Got it! I’ll hold it steady. Your turn, Cún.');setActive('BON');
+ }else if(sceneState==='bon'){
+  setDialogue(active==='CÚN'?'CÚN':'BON',active==='CÚN'?'Perfect. Don’t let go!':'Steady as a rock. Probably.');
+ }
+};
+$('starHotspot').onclick=()=>{
+ if(sceneState==='default'){setDialogue(active,'That star is just out of reach. We need the ladder.');return}
+ if(sceneState==='bon'){setDialogue(active,'Almost there, but I need to climb up first.');return}
+ if(sceneState==='cun'){setDialogue('CÚN','A little higher... and... there!');setScene('complete');setActive('CÚN');step=2;setTimeout(()=>$('completeOverlay').style.display='flex',650);return}
+};
+$('treeHotspot').onclick=()=>{
+ if(sceneState==='default')setDialogue(active,'The tree looks lovely, but it’s missing its star.');
+ else if(sceneState==='bon'){
+  if(active==='CÚN'){setScene('cun');setDialogue('CÚN','I’ve got the star! Just a little further...');step=2}
+  else setDialogue('BON','I’m holding the ladder, not decorating the tree!');
+ }else if(sceneState==='cun'){setDialogue('CÚN','Nearly there!');}
+ else if(sceneState==='complete'){setDialogue('BON','There. Christmas officially looks complete.');}
+};
+$('plushHotspot').onclick=()=>{if(!plushSeen){plushSeen=true;setDialogue(active,'Wait... why is there a cockroach plush on the shelf?');}else setDialogue(active,'We’re not discussing the cockroach.');};
+$('sofaHotspot').onclick=()=>setDialogue(active,active==='BON'?'A quick nap before decorating?':'Bon. We are supposed to be decorating.');
+$('hintBtn').onclick=()=>{const hints=['The ladder is right there. Maybe someone should hold it.','Choose Bon, then tap the ladder.','Switch to Cún and tap the tree to climb up.'];$('hintBubble').textContent=hints[Math.min(step,2)];$('hintBubble').style.display='block'};
+$('backBtn').onclick=()=>{setScene('default');setActive('BON');step=0;show('introScreen');$('completeOverlay').style.display='none'};
+$('musicBtn').onclick=()=>{musicOn=!musicOn;$('musicBtn').style.opacity=musicOn?'.55':'1';setDialogue('BON',musicOn?'Music on — imagine a little Christmas tune.':'Music off. Peace and quiet.')};
+$('dialogue').onclick=()=>{if(sceneState==='complete'){$('completeOverlay').style.display='flex'}else if(sceneState==='default'&&step===0)setDialogue('BON','The star is on the shelf. Let’s get the ladder into position first.')};
+$('dialogue').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$('dialogue').click()}};
+$('continueBtn').onclick=()=>{setScene('laugh');$('completeOverlay').style.display='none';setDialogue('CÚN','We did it! ...Although I think you got more ornaments on your head than the tree.');setTimeout(()=>setDialogue('BON','That was part of the plan. Obviously.'),1800)};
+</script></body></html>
