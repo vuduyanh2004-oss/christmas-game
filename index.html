@@ -48,12 +48,12 @@ body{display:grid;place-items:center;background:radial-gradient(ellipse at cente
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
 </style></head><body>
 <main id="game" aria-label="Christmas Quests game">
- <section id="titleScreen" class="screen active"><img class="full" src="assets/title.png" alt="Christmas Quests — Bon & Cún Bizzare Adventure"><div class="startCue">Tap anywhere to start</div></section>
- <section id="introScreen" class="screen"><img class="full" src="assets/level1_intro.png" alt="Level 1 — Christmas Tree"><div class="introCue">Tap to begin</div></section>
+ <section id="titleScreen" class="screen active"><img class="full" src="title.png" alt="Christmas Quests — Bon & Cún Bizzare Adventure"><div class="startCue">Tap anywhere to start</div></section>
+ <section id="introScreen" class="screen"><img class="full" src="level1_intro.png" alt="Level 1 — Christmas Tree"><div class="introCue">Tap to begin</div></section>
  <section id="playScreen" class="screen">
-  <img id="scene" class="scene" src="assets/scene_default.png" alt="Christmas living room">
-  <div class="topbar"><div class="topLeft"><button class="iconBtn" id="backBtn" title="Back to level intro"><img src="assets/ui_back.png" alt="Back"></button><div class="levelTag"><img src="assets/ui_level_tag.png" alt=""><span>Level 01 / 06</span></div></div>
-   <div class="topRight"><div class="characterSwitch"><button class="charBtn selected" id="bonBtn">BON</button><button class="charBtn" id="cunBtn">CÚN</button></div><button class="iconBtn" id="hintBtn" title="Hint"><img src="assets/ui_hints.png" alt="Hint"></button><button class="iconBtn" id="musicBtn" title="Music"><img src="assets/ui_music.png" alt="Music"></button></div></div>
+  <img id="scene" class="scene" src="scene_default.png" alt="Christmas living room">
+  <div class="topbar"><div class="topLeft"><button class="iconBtn" id="backBtn" title="Back to level intro"><img src="ui_back.png" alt="Back"></button><div class="levelTag"><img src="ui_level_tag.png" alt=""><span>Level 01 / 06</span></div></div>
+   <div class="topRight"><div class="characterSwitch"><button class="charBtn selected" id="bonBtn">BON</button><button class="charBtn" id="cunBtn">CÚN</button></div><button class="iconBtn" id="hintBtn" title="Hint"><img src="ui_hints.png" alt="Hint"></button><button class="iconBtn" id="musicBtn" title="Music"><img src="ui_music.png" alt="Music"></button></div></div>
   <button class="hotspot" id="ladderHotspot" aria-label="Inspect ladder"></button><button class="hotspot" id="starHotspot" aria-label="Inspect star"></button><button class="hotspot" id="treeHotspot" aria-label="Inspect Christmas tree"></button><button class="hotspot" id="plushHotspot" aria-label="Inspect plush toy"></button><button class="hotspot" id="sofaHotspot" aria-label="Inspect sofa"></button>
   <div id="hintBubble"></div>
   <div class="dialogue" id="dialogue" role="button" tabindex="0"><span class="speaker" id="speaker">BON</span><span class="line" id="line">The star is still on the shelf. We should put it on the tree.</span><span class="continue">TAP TO CONTINUE ▸</span></div>
@@ -63,7 +63,7 @@ body{display:grid;place-items:center;background:radial-gradient(ellipse at cente
 <div id="rotateNotice" aria-live="polite"><div class="rotateIcon">📱</div><strong>Rotate your phone</strong><span>Christmas Quests is best played sideways.<br>Turn your phone to landscape to continue.</span></div>
 <script>
 const $=id=>document.getElementById(id);let screen='title',sceneState='default',active='BON',step=0,plushSeen=false,musicOn=false;
-const scenes={default:'assets/scene_default.png',bon:'assets/scene_bon_ladder.png',cun:'assets/scene_cun_star.png',complete:'assets/scene_complete.png',laugh:'assets/scene_laugh.png'};
+const scenes={default:'scene_default.png',bon:'scene_bon_ladder.png',cun:'scene_cun_star.png',complete:'scene_complete.png',laugh:'scene_laugh.png'};
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active')}
 function setDialogue(who,msg){$('speaker').textContent=who;$('line').textContent=msg}
 function setActive(who){active=who;$('bonBtn').classList.toggle('selected',who==='BON');$('cunBtn').classList.toggle('selected',who==='CÚN')}
